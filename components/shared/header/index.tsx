@@ -29,11 +29,6 @@ const Header = () => {
           </Button>
           <Button asChild variant={"ghost"}>
             <Link href={"/cart"}>
-              <ShoppingCart /> Cart
-            </Link>
-          </Button>
-          <Button asChild variant={"ghost"}>
-            <Link href={"/cart"}>
               <UserIcon /> Sign In
             </Link>
           </Button>
