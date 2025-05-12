@@ -22,7 +22,7 @@ const Menu = () => {
           </Link>
         </Button>
         <Button asChild>
-          <Link href={"/signin"}>
+          <Link href={"/sign-in"}>
             <UserIcon /> Sign In
           </Link>
         </Button>
@@ -41,7 +41,7 @@ const Menu = () => {
               </Link>
             </Button>
             <Button asChild>
-              <Link href={"/signin"}>
+              <Link href={"/sign-in"}>
                 <UserIcon /> Sign In
               </Link>
             </Button>
