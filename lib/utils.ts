@@ -36,5 +36,9 @@ export function formatError(error: any) {
 
     return `${field.charAt(0).toUpperCase() + field.slice(1)} already exists.`;
   } else {
+    // Handle other errors
+    return typeof error.message === "string"
+      ? error.message
+      : JSON.stringify(error.message);
   }
 }
