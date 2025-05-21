@@ -4,7 +4,6 @@ import { prisma } from "@/db/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
 import type { NextAuthConfig } from "next-auth";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export const config = {
@@ -86,7 +85,8 @@ export const config = {
       }
       return token;
     },
-    authorized({ request, auth }: any) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    authorized({ request }: any) {
       // Check for session cart cookie
       if (!request.cookies.get("sessionCartId")) {
         // Generate new session id cookie
