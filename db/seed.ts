@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/lib/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import sampleData from "./sample-data";
 
 async function main() {
@@ -12,7 +12,7 @@ async function main() {
   await prisma.user.deleteMany();
 
   await prisma.product.createMany({ data: sampleData.products });
-  
+
   await prisma.user.createMany({ data: sampleData.users });
 
   console.log("Database seeded successfully.");
