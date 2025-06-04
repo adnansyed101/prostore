@@ -85,7 +85,7 @@ export const config = {
           });
         }
 
-        if (["signIn", "signUp"].includes(trigger)) {
+        if (trigger === "signIn" || trigger === "signUp") {
           const cookiesObject = await cookies();
           const sessionCartId = cookiesObject.get("sessionCartId")?.value;
 
@@ -95,7 +95,9 @@ export const config = {
             where: { sessionCartId },
           });
 
-          if (!sessionCart) return;
+          if (!sessionCart) {
+            return token;
+          }
 
           if (sessionCart.userId !== user.id) {
             // Delete current user cart
