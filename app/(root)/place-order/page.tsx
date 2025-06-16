@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { getMyCart } from "@/lib/actions/cart.action";
 import { getUserById } from "@/lib/actions/user.actions";
+import { formatCurrency } from "@/lib/utils";
 import { ShippingAddress } from "@/types";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -110,6 +111,28 @@ const PlaceOrderPage = async () => {
                   ))}
                 </TableBody>
               </Table>
+            </CardContent>
+          </Card>
+        </div>
+        <div>
+          <Card>
+            <CardContent className="p-4 gap-4 space-y-4">
+              <div className="flex justify-between">
+                <div>Items</div>
+                <div>{formatCurrency(cart.itemsPrice)}</div>
+              </div>
+              <div className="flex justify-between">
+                <div>Tax</div>
+                <div>{formatCurrency(cart.taxPrice)}</div>
+              </div>
+              <div className="flex justify-between">
+                <div>Shipping</div>
+                <div>{formatCurrency(cart.shippingPrice)}</div>
+              </div>
+              <div className="flex justify-between">
+                <div>Total</div>
+                <div>{formatCurrency(cart.totalPrice)}</div>
+              </div>
             </CardContent>
           </Card>
         </div>
