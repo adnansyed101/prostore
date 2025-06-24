@@ -11,7 +11,7 @@ function UserLayout({
 }>) {
   return (
     <>
-      <div className="flex clex-col">
+      <div className="flex flex-col">
         <div className="border-b container mx-auto">
           <div className="flex items-center h-16 px-4">
             <Link href="/" className="w-22">
