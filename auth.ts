@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/db/prisma";
@@ -56,7 +57,6 @@ export const config = {
     }),
   ],
   callbacks: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async session({ session, user, trigger, token }: any) {
       // Set the user ID from the token
       session.user.id = token.sub;
@@ -69,8 +69,8 @@ export const config = {
       }
       return session;
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async jwt({ token, user, trigger }: any) {
+
+    async jwt({ token, user, trigger, session }: any) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
@@ -113,6 +113,12 @@ export const config = {
           }
         }
       }
+
+      // Handle session updates
+      if (session?.user.name && trigger === "update") {
+        token.name = session.user.name;
+      }
+
       return token;
     },
 
