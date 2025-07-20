@@ -224,6 +224,11 @@ export async function deleteOrder(id: string) {
     await prisma.order.delete({ where: { id } });
 
     revalidatePath("/admin/orders");
+
+    return {
+      success: true,
+      message: "Order Deleted Sucessfully.",
+    };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
