@@ -1,6 +1,6 @@
 # Prostore
 
-A modern ecommerce website made using Next js with TS. A full-featured shopping platform with reviews, PayPal and Stripe integration, email receipts and more.
+A modern ecommerce website made using Next js with TS. A full-featured shopping platform with reviews, SSLCommerz and Stripe integration, email receipts and more.
 
 # [Live Link](https://prostore-seven-gamma.vercel.app/)
 
@@ -17,6 +17,6 @@ A modern ecommerce website made using Next js with TS. A full-featured shopping 
 
 # Features
 
-- PayPal, Stripe and Cash On Delivery payment options
+- SSLCommerz, Stripe and Cash On Delivery payment options
 - Full Authentication, admin area, review system, featured projects, sorting, search filters, user profiles, image uploading & more
 - Full admin dashboard with stats and montly sales chart as well as product, order and user management
