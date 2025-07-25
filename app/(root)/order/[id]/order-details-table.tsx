@@ -18,6 +18,8 @@ import Link from "next/link";
 import { updateOrderToPaidCOD, deliverOrder } from "@/lib/actions/order.action";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import sslcommerImg from "@/public/sslcom.png";
+import { redirect } from "next/navigation";
 
 const OrderDetailsTable = ({
   order,
@@ -59,6 +61,17 @@ const OrderDetailsTable = ({
         {isPending ? "processing..." : "Mark As Paid"}
       </Button>
     );
+  };
+
+  const handleClick = async (orderId: string) => {
+    const data = await fetch(
+      `http://localhost:3000/api/payment/request/${orderId}`
+    );
+    const sslUrl = await data.json();
+
+    console.log(sslUrl);
+
+    redirect(sslUrl.url);
   };
 
   // Button to mark order as delivered
@@ -188,6 +201,21 @@ const OrderDetailsTable = ({
                 <MarkAsPaidButton />
               )}
               {isAdmin && isPaid && !isDelivered && <MarkAsDeliveredButton />}
+              {/* PayPal Payment */}
+              {!isPaid && paymentMethod === "SSLCommerz" && (
+                <Button
+                  className="bg-blue-800 hover:bg-blue-900 w-full rounded-sm py-6 text-lg cursor-pointer"
+                  onClick={() => handleClick(order.id)}
+                >
+                  <Image
+                    src={sslcommerImg}
+                    height={20}
+                    width={30}
+                    alt="SSLCommerz"
+                  />{" "}
+                  <span>SSLCommerz Payment</span>
+                </Button>
+              )}
             </CardContent>
           </Card>
         </div>
