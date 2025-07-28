@@ -65,11 +65,9 @@ const OrderDetailsTable = ({
 
   const handleClick = async (orderId: string) => {
     const data = await fetch(
-      `http://localhost:3000/api/payment/request/${orderId}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/payment/request/${orderId}`
     );
     const sslUrl = await data.json();
-
-    console.log(sslUrl);
 
     redirect(sslUrl.url);
   };
