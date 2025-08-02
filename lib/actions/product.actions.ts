@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from "../constants";
 import { convertToPlainObject, formatError } from "../utils";
 import { prisma } from "@/db/prisma";
+import { insertProductSchema } from "../validators";
+import { z } from "zod";
 
 // Get latest products
 export async function getLatestProducts() {
@@ -61,6 +63,24 @@ export async function deleteProduct(id: string) {
     return {
       success: true,
       message: "Product deleted successfully.",
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+// Create a product
+export async function createProduct(data: z.infer<typeof insertProductSchema>) {
+  try {
+    const product = insertProductSchema.parse(data);
+
+    await prisma.product.create({ data: product });
+
+    revalidatePath("/admin/products");
+
+    return {
+      success: true,
+      message: "Product created successfully.",
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
