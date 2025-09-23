@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import Pagination from "@/components/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
+import { Plus } from "lucide-react";
 
 const AdminProductsPage = async (props: {
   searchParams: Promise<{ page: string; query: string; category: string }>;
@@ -35,7 +36,10 @@ const AdminProductsPage = async (props: {
       <div className="flex-between">
         <h1 className="h2-bold">Products</h1>
         <Button asChild variant="default">
-          <Link href="/admin/products/create">Create Product</Link>
+          <Link href="/admin/products/create">
+            <Plus />
+            Create Product
+          </Link>
         </Button>
       </div>
 
