@@ -20,3 +20,9 @@ A modern ecommerce website made using Next js with TS. A full-featured shopping 
 - SSLCommerz, Stripe and Cash On Delivery payment options
 - Full Authentication, admin area, review system, featured projects, sorting, search filters, user profiles, image uploading & more
 - Full admin dashboard with stats and montly sales chart as well as product, order and user management
+
+# Sandbox Card Number
+
+- Card Number - 4111111111111111\
+- Exp - 12/25
+- CVV - 111
