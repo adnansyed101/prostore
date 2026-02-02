@@ -14,11 +14,12 @@ import { formatError } from "../utils";
 import { ShippingAddress } from "@/types";
 import { getMyCart } from "./cart.action";
 import { z } from "zod";
+import { PAGE_SIZE } from "../constants";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
   try {
     const user = signInFormSchema.parse({
@@ -122,7 +123,7 @@ export async function updateUserAddress(data: ShippingAddress) {
 
 // Update User's payment method
 export async function updateUserPaymentMethod(
-  data: z.infer<typeof paymentMethodSchema>
+  data: z.infer<typeof paymentMethodSchema>,
 ) {
   try {
     const session = await auth();
@@ -174,4 +175,26 @@ export async function updateProfile(user: { name: string; email: string }) {
   } catch (error) {
     return { sucess: false, message: formatError(error) };
   }
+}
+
+// Get All Users
+export async function getAllUsers({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const data = await prisma.user.findMany({
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    skip: (page - 1) * limit,
+  });
+
+  const dataCount = await prisma.user.count();
+
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
+  };
 }
