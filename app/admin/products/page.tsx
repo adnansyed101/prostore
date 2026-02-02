@@ -68,7 +68,7 @@ const AdminProductsPage = async (props: {
               <TableCell>{product.rating}</TableCell>
               <TableCell className="flex fap-1">
                 <Button asChild variant="outline" size="sm">
-                  <Link href={`/admin/prodcuts/${product.id}`}>Edit</Link>
+                  <Link href={`/admin/products/${product.id}`}>Edit</Link>
                 </Button>
                 <DeleteDialog id={product.id} action={deleteProduct} />
               </TableCell>
