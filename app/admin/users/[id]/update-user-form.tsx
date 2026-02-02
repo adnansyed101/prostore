@@ -17,11 +17,13 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { updateUser } from "@/lib/actions/user.actions";
 import { USER_ROLES } from "@/lib/constants";
 import { updateUserSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { ControllerRenderProps, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const UpdateUserForm = ({
@@ -35,8 +37,30 @@ const UpdateUserForm = ({
     defaultValues: user,
   });
 
-  const onSubmit = () => {
-    return;
+  const onSubmit = async (value: z.infer<typeof updateUserSchema>) => {
+    try {
+      const res = await updateUser({
+        ...value,
+        id: user.id,
+      });
+
+      if (!res.success) {
+        return toast.error("Some Error Occured", {
+          description: res.message,
+        });
+      }
+
+      toast.success("Success", {
+        description: res.message,
+      });
+
+      form.reset();
+      router.push("/admin/users");
+    } catch (error) {
+      toast.error("Some Error occured", {
+        description: (error as Error).message,
+      });
+    }
   };
 
   return (
