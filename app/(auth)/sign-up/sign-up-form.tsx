@@ -85,7 +85,11 @@ const SignUpForm = () => {
         )}
         <div className="test-sm test-center text-muted-foreground">
           Already have an account?{" "}
-          <Link href={"/sign-in"} target="_self">
+          <Link
+            href={"/sign-in"}
+            target="_self"
+            className="underline underline-offset-2"
+          >
             Sign in
           </Link>
         </div>
