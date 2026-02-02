@@ -2,7 +2,7 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AdminSearch = () => {
   const pathname = usePathname();
@@ -15,14 +15,24 @@ const AdminSearch = () => {
   const searchParams = useSearchParams();
   const [queryValue, setQueryValue] = useState(searchParams.get("query") || "");
 
+  useEffect(() => {
+    setQueryValue(searchParams.get("query") || "");
+  }, [searchParams]);
+
   return (
-    <div>
+    <form action={formActionUrl} method="GET">
       <Input
         type="search"
         placeholder="Search..."
-        className="md:w-[140px] lg"
+        name="query"
+        value={queryValue}
+        onChange={(e) => setQueryValue(e.target.value)}
+        className="md:w-[100px] lg:w-[300px]"
       />
-    </div>
+      <button className="sr-only" type="submit">
+        Search
+      </button>
+    </form>
   );
 };
 
