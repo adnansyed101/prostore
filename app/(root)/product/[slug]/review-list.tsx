@@ -2,6 +2,7 @@
 import { Review } from "@/types";
 import Link from "next/link";
 import { useState } from "react";
+import ReviewForm from "./revie-form";
 
 const ReviewList = ({
   userId,
@@ -19,7 +20,7 @@ const ReviewList = ({
       {reviews.length === 0 && <div>No Reviews Yet</div>}
 
       {userId ? (
-        <>{/* Review Form Here */}</>
+        <ReviewForm userId={userId} productId={productId} />
       ) : (
         <div>
           Please
