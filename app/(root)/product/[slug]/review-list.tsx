@@ -2,7 +2,7 @@
 import { Review } from "@/types";
 import Link from "next/link";
 import { useState } from "react";
-import ReviewForm from "./revie-form";
+import ReviewForm from "./review-form";
 import { getReviews } from "@/lib/actions/review.action";
 import { useEffect } from "react";
 import {
