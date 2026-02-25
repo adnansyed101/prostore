@@ -38,7 +38,6 @@ import {
   getReviewByProductId,
 } from "@/lib/actions/review.action";
 import { toast } from "sonner";
-import { on } from "events";
 
 const ReviewForm = ({
   userId,
