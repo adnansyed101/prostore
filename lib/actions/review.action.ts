@@ -99,7 +99,7 @@ export async function createUpdateReview(
 }
 
 // Get All Reviews for a product
-export async function getReviwews({ productId }: { productId: string }) {
+export async function getReviews({ productId }: { productId: string }) {
   const data = await prisma.review.findMany({
     where: {
       productId: productId,
