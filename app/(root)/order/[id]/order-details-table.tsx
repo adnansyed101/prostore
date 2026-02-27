@@ -20,13 +20,16 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 import sslcommerImg from "@/public/sslcom.png";
 import { redirect } from "next/navigation";
+import StripePayment from "./stripe-payment";
 
 const OrderDetailsTable = ({
   order,
   isAdmin,
+  stripeClientSecret,
 }: {
   order: Order;
   isAdmin: boolean;
+  stripeClientSecret: string | null;
 }) => {
   const {
     id,
@@ -65,7 +68,7 @@ const OrderDetailsTable = ({
 
   const handleClick = async (orderId: string) => {
     const data = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/payment/request/${orderId}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/payment/request/${orderId}`,
     );
     const sslUrl = await data.json();
 
@@ -199,6 +202,16 @@ const OrderDetailsTable = ({
                 <MarkAsPaidButton />
               )}
               {isAdmin && isPaid && !isDelivered && <MarkAsDeliveredButton />}
+
+              {/* Stripe Payment */}
+              {!isPaid && paymentMethod === "Stripe" && stripeClientSecret && (
+                <StripePayment
+                  priceInCents={Number(order.totalPrice) * 100}
+                  orderId={order.id}
+                  client_secret={stripeClientSecret}
+                />
+              )}
+
               {/* PayPal Payment */}
               {!isPaid && paymentMethod === "SSLCommerz" && (
                 <Button
