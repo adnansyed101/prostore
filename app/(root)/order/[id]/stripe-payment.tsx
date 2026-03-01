@@ -1,13 +1,112 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  PaymentElement,
+  Elements,
+  useStripe,
+  useElements,
+  LinkAuthenticationElement,
+} from "@stripe/react-stripe-js";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/utils";
+import { SERVERL_URL } from "@/lib/constants";
+
 const StripePayment = ({
   priceInCents,
   orderId,
-  client_secret,
+  clientSecret,
 }: {
   priceInCents: number;
   orderId: string;
-  client_secret: string;
+  clientSecret: string;
 }) => {
-  return <div>Stripe Form</div>;
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+  );
+
+  const { theme, systemTheme } = useTheme();
+
+  // Stripe Form Component
+  const StripeForm = () => {
+    const stripe = useStripe();
+    const elements = useElements();
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [email, setEmail] = useState("");
+
+    const handleSubmit = async (e: FormEvent) => {
+      e.preventDefault();
+
+      if (stripe == null || elements == null || email == null) return;
+      setIsLoading(true);
+
+      stripe
+        .confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${SERVERL_URL}/order/${orderId}/stripe-payment-success`,
+          },
+        })
+        .then(({ error }) => {
+          if (
+            error?.type === "card_error" ||
+            error?.type === "validation_error"
+          ) {
+            setErrorMessage(error.message || "An unknown error occurred.");
+          } else if (error) {
+            setErrorMessage("An unknown error occurred.");
+          }
+        })
+        .finally(() => setIsLoading(false));
+    };
+
+    return (
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <div className="text-xl">Stripe Checkout</div>
+        {errorMessage && <div className="text-destructive">{errorMessage}</div>}
+
+        <PaymentElement />
+        <div>
+          <LinkAuthenticationElement
+            onChange={(e) => setEmail(e.value.email)}
+          />
+        </div>
+        <Button
+          className="w-full"
+          size="lg"
+          disabled={stripe == null || elements == null || isLoading}
+        >
+          {isLoading
+            ? "Purchasing..."
+            : `Purchase ${formatCurrency(priceInCents / 100)}`}
+        </Button>
+      </form>
+    );
+  };
+
+  return (
+    <Elements
+      stripe={stripePromise}
+      options={{
+        clientSecret,
+        appearance: {
+          theme:
+            theme === "dark"
+              ? "night"
+              : theme === "light"
+                ? "stripe"
+                : systemTheme === "light"
+                  ? "stripe"
+                  : "night",
+        },
+      }}
+    >
+      <StripeForm />
+    </Elements>
+  );
 };
 
 export default StripePayment;

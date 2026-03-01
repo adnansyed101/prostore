@@ -208,7 +208,7 @@ const OrderDetailsTable = ({
                 <StripePayment
                   priceInCents={Number(order.totalPrice) * 100}
                   orderId={order.id}
-                  client_secret={stripeClientSecret}
+                  clientSecret={stripeClientSecret}
                 />
               )}
 

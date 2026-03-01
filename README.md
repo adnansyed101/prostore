@@ -21,8 +21,16 @@ A modern ecommerce website made using Next js with TS. A full-featured shopping 
 - Full Authentication, admin area, review system, featured projects, sorting, search filters, user profiles, image uploading & more
 - Full admin dashboard with stats and montly sales chart as well as product, order and user management
 
-# Sandbox Card Number
+# SSLCOMMERZ Sandbox Card Number
 
-- Card Number - 4111111111111111\
+- Card Number - 4111 1111 1111 1111
 - Exp - 12/25
 - CVV - 111
+
+# Stripe Dummy Card Number
+
+- Card Number - 4242 4242 4242 4242
+- Exp - 12/34
+- Security Code - 123
+- Country - United States
+- Zip Code - 12345
